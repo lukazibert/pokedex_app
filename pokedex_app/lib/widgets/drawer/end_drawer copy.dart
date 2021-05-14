@@ -1,5 +1,7 @@
+import 'package:clip_shadow/clip_shadow.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pokedex_app/controllers/account_controller.dart';
 import 'package:pokedex_app/controllers/home_page_controller.dart';
 import 'package:pokedex_app/controllers/navigation_controller.dart';
 
@@ -9,14 +11,19 @@ class CustomEndDrawer2 extends StatelessWidget {
   final NavigationController navigationController =
       Get.put(NavigationController());
   final HomeController homeController = Get.put(HomeController());
+  final AccountController accountController = Get.put(AccountController());
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-      child: Container(
-          width: MediaQuery.of(context).size.width,
-          child: ClipPath(
-            clipper: PokedexClipper(),
+      child: ClipShadow(
+          boxShadow: [
+            BoxShadow(
+                offset: Offset(0.0, -2.0), blurRadius: 2.0, color: Colors.black)
+          ],
+          clipper: PokedexClipper(),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
             child: Drawer(
               elevation: 50,
               child: Column(
@@ -56,6 +63,7 @@ class CustomEndDrawer2 extends StatelessWidget {
                               navigationController.selectedWidget.value =
                                   WidgetMarker.account;
                               Navigator.pop(context);
+                              accountController.seletedIndex.value = 0;
                             },
                             icon: Icons.account_circle,
                           ),
@@ -76,6 +84,7 @@ class CustomEndDrawer2 extends StatelessWidget {
                             onPressed: () {
                               if (homeController.homeController.hasClients)
                                 homeController.homeController.jumpToPage(1);
+                              //homeController.homeController.jumpToPage(1);
                               homeController.pokemonPageViewIndex.value = 0;
                               Navigator.pop(context);
                               navigationController.selectedWidget.value =
@@ -132,7 +141,7 @@ class EndDrawerPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 20.0
+      ..strokeWidth = 10.0
       ..color = Colors.black;
 
     var path = pokedexClipper.getClip(size);

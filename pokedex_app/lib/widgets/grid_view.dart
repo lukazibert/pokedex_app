@@ -11,7 +11,7 @@ class PokemonGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).primaryColor,
+      color: Colors.white,
       child: GridView.builder(
           controller: ScrollController(
               initialScrollOffset:

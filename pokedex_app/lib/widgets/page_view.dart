@@ -1,3 +1,4 @@
+import 'package:clip_shadow/clip_shadow.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pokedex_app/controllers/home_page_controller.dart';
@@ -11,7 +12,7 @@ class PokemonPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).primaryColor,
+      color: Colors.white,
       child: Obx(() => PageView.builder(
           controller: PageController(
               initialPage: homeController.pokemonPageViewIndex.value,

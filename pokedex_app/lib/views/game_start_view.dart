@@ -12,10 +12,10 @@ class GameStart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 50),
+            padding: const EdgeInsets.only(top: 20),
             child: Container(
               //height: 100,
               alignment: Alignment.center,
@@ -44,6 +44,29 @@ class GameStart extends StatelessWidget {
               ]),
             ),
           ),
+          Stack(children: [
+            Text(
+              'game',
+              style: TextStyle(
+                fontSize: 150.0,
+                fontFamily: 'Pocket-monk',
+                letterSpacing: 10.0,
+                foreground: Paint()
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 10
+                  ..color = Colors.blue[700],
+              ),
+            ),
+            Text(
+              'game',
+              style: TextStyle(
+                letterSpacing: 10.0,
+                fontSize: 150.0,
+                color: Colors.yellowAccent[700],
+                fontFamily: 'Pocket-monk',
+              ),
+            ),
+          ]),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -204,50 +227,59 @@ class GameStart extends StatelessWidget {
           //     }).toList(),
           //   ),
           // ),
-          GestureDetector(
-            onTap: () {
-              Get.to(() => GameView());
-              Future.delayed(Duration(seconds: 1));
-              gameControlller.start();
-            },
-            child: Container(
-              height: 100,
-              width: 300,
-              decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black,
-                      blurRadius: 1,
-                      offset: Offset(1.5, 4),
-                    ),
-                  ],
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
-              child: Stack(
-                alignment: Alignment.centerLeft,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5.0),
-                    child: Icon(
-                      Icons.videogame_asset_outlined,
-                      color: Colors.white,
-                      size: 70.0,
-                    ),
-                  ),
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 15.0),
-                      child: Text(
-                        'Play',
-                        style: TextStyle(
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black, blurRadius: 1, offset: Offset(1.5, 3)),
+              ],
+            ),
+            child: Material(
+              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              color: Colors.red,
+              child: InkWell(
+                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                //focusColor: Colors.black,
+                splashColor: Colors.white.withOpacity(0.2),
+                onTap: () async {
+                  //await Future.delayed(Duration(milliseconds: 100));
+                  gameControlller.start();
+                  gameControlller.pointsCount.value = 0;
+                  gameControlller.roundsCount.value = 0;
+                  await Future.delayed(Duration(milliseconds: 400));
+                  Get.to(() => GameView());
+                },
+                child: Container(
+                  height: 100,
+                  width: 300,
+                  child: Stack(
+                    alignment: Alignment.centerLeft,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 5.0),
+                        child: Icon(
+                          Icons.videogame_asset_outlined,
                           color: Colors.white,
-                          fontFamily: 'Pocket-monk',
-                          fontSize: 70.0,
+                          size: 70.0,
                         ),
                       ),
-                    ),
-                  )
-                ],
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 15.0),
+                          child: Text(
+                            'Play',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Pocket-monk',
+                              fontSize: 70.0,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
