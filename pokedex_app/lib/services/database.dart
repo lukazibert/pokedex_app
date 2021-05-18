@@ -8,11 +8,17 @@ class DatabaseService {
   final CollectionReference usersDataCollection =
       FirebaseFirestore.instance.collection('usersData');
 
-  Future<void> updateUserData(String name, String favPokemonIndex,
-      String bestScore, String email, String password) async {
+  Future<void> updateUserData(
+      String name,
+      String favPokemonIndex,
+      String previusScore,
+      String bestScore,
+      String email,
+      String password) async {
     return await usersDataCollection.doc(uid).set({
       'name': name,
       'favPokemonIndex': favPokemonIndex,
+      'previusScore': previusScore,
       'bestScore': bestScore,
       'email': email,
       'password': password,

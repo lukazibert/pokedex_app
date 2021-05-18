@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pokedex_app/services/auth.dart';
 import 'package:pokedex_app/services/database.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountController extends GetxController {
   final AuthService _authServices = AuthService();
@@ -35,17 +36,8 @@ class AccountController extends GetxController {
   // }
 
   singIn() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     print('sing in called');
-    // DocumentReference documentReference =
-    //     FirebaseFirestore.instance.collection('SingInData').doc(email.value);
-
-    // Map<String, dynamic> users = {
-    //   'email': email.value,
-    //   'password': password.value,
-    // };
-
-    // documentReference.set(users).whenComplete(() => print('user sing in'));
-
     dynamic result = await _authServices
         .signInWithEmailAndPassword(email.value, password.value)
         .whenComplete(() => print('singed in'));
@@ -53,12 +45,22 @@ class AccountController extends GetxController {
     _userUID = result.uid;
     isLoggedIn.value = true;
 
+    prefs.setString('email', email.value);
+    prefs.setString('password', password.value);
+
     // email.value = '';
     // password.value = '';
   }
 
   Future<DocumentSnapshot> getData() async {
     return await users.doc(_userUID).get();
+  }
+
+  // getUID() {
+  //   return _userUID;
+  // }
+  getStreamData() {
+    return users.doc(_userUID);
   }
 
   logOut() async {
@@ -94,6 +96,11 @@ class AccountController extends GetxController {
 
     await users
         .doc(_userUID)
+        .update({'previusScore': '$points/$rounds'}).whenComplete(
+            () => print('setting complete'));
+
+    await users
+        .doc(_userUID)
         .get()
         .then((value) => retrivedData = value.data());
 
@@ -110,5 +117,16 @@ class AccountController extends GetxController {
             () => print('setting complete'));
 
     choseFav.value = false;
+  }
+
+  initialLogIn() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var initEmail = prefs.getString('email') ?? '';
+    var initPass = prefs.getString('password') ?? '';
+    if (initPass != '' && initEmail != '') {
+      email.value = initEmail;
+      password.value = initPass;
+      singIn();
+    }
   }
 }

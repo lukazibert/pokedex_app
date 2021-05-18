@@ -21,17 +21,36 @@ Widget CustomAppBar(BuildContext context, _drawerKey) {
           color: Theme.of(context).primaryColor,
           child: Row(
             children: [
-              ClipOval(
-                child: Container(
-                  height: 80.0,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('assets/pokedex-button.png'))),
-                  child: TextButton(
-                      child: null,
-                      onPressed: () {
-                        _drawerKey.currentState.openEndDrawer();
-                      }),
+              Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black,
+                      blurRadius: 0.5,
+                      //spreadRadius: 10.0,
+                      offset: Offset(2, 2),
+                    )
+                  ],
+                ),
+                child: ClipOval(
+                  child: Container(
+                    height: 65.0,
+                    decoration: BoxDecoration(
+                        // boxShadow: [
+                        //   BoxShadow(
+                        //       color: Colors.black,
+                        //       blurRadius: 3,
+                        //       offset: Offset(10, 10)),
+                        // ],
+                        image: DecorationImage(
+                            image: AssetImage('assets/pokedex-button.png'))),
+                    child: TextButton(
+                        child: null,
+                        onPressed: () {
+                          _drawerKey.currentState.openEndDrawer();
+                        }),
+                  ),
                 ),
               ),
               Container(

@@ -9,7 +9,7 @@ import 'package:pokedex_app/widgets/custom_row_grid.dart';
 
 import 'game_view_text_input.dart';
 
-class GameStart extends StatelessWidget {
+class GameStart2 extends StatelessWidget {
   final GameControlller gameControlller = Get.put(GameControlller());
   final AccountController accountController = Get.put(AccountController());
   final NavigationController navigationController =
@@ -111,44 +111,64 @@ class GameStart extends StatelessWidget {
                             ),
                           ]),
                           accountController.isLoggedIn.value
-                              ? FutureBuilder<DocumentSnapshot>(
-                                  future: accountController.getData(),
+                              ? StreamBuilder<QuerySnapshot>(
+                                  stream: accountController.getStreamData(),
                                   builder: (BuildContext context,
-                                      AsyncSnapshot snapshot) {
+                                      AsyncSnapshot<QuerySnapshot> snapshot) {
                                     if (snapshot.connectionState ==
-                                        ConnectionState.done) {
-                                      Map<String, dynamic> data =
-                                          snapshot.data.data();
-                                      return Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Stack(children: [
-                                            Text(
-                                              data['bestScore'],
-                                              style: TextStyle(
-                                                fontFamily: 'Pocket-monk',
-                                                fontSize: 40.0,
-                                                foreground: Paint()
-                                                  ..style = PaintingStyle.stroke
-                                                  ..strokeWidth = 6
-                                                  ..color = Colors.black,
-                                              ),
-                                            ),
-                                            Text(
-                                              data['bestScore'],
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontFamily: 'Pocket-monk',
-                                                  fontSize: 40.0),
-                                            ),
-                                          ]),
-                                        ],
-                                      );
+                                        ConnectionState.waiting) {
+                                      return Text("Loading");
                                     }
+                                    return ListView(
+                                      children: snapshot.data.docs.map(
+                                        (DocumentSnapshot document) {
+                                          return Stack(
+                                            children: [
+                                              Text(
+                                                document['bestScore'],
+                                                style: TextStyle(
+                                                  fontFamily: 'Pocket-monk',
+                                                  fontSize: 40.0,
+                                                  foreground: Paint()
+                                                    ..style =
+                                                        PaintingStyle.stroke
+                                                    ..strokeWidth = 6
+                                                    ..color = Colors.black,
+                                                ),
+                                              ),
+                                              Text(
+                                                document['bestScore'],
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontFamily: 'Pocket-monk',
+                                                    fontSize: 40.0),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ).toList(),
+                                    );
+                                  },
+                                )
+                              // FutureBuilder<DocumentSnapshot>(
+                              //     future: accountController.getData(),
+                              //     builder: (BuildContext context,
+                              //         AsyncSnapshot snapshot) {
+                              //       if (snapshot.connectionState ==
+                              //           ConnectionState.done) {
+                              //         Map<String, dynamic> data =
+                              //             snapshot.data.data();
+                              //         return Row(
+                              //           mainAxisAlignment:
+                              //               MainAxisAlignment.center,
+                              //           children: [
 
-                                    return Text("loading");
-                                  })
+                              //           ],
+                              //         );
+                              //       }
+
+                              //       return Text("loading");
+                              //     })
                               : Container(
                                   decoration: BoxDecoration(
                                     borderRadius:
@@ -233,44 +253,48 @@ class GameStart extends StatelessWidget {
                             ),
                           ]),
                           accountController.isLoggedIn.value
-                              ? FutureBuilder<DocumentSnapshot>(
-                                  future: accountController.getData(),
+                              ? StreamBuilder<QuerySnapshot>(
+                                  stream: accountController
+                                      .getStreamData()
+                                      .snapshots(),
+                                  // .listen(),
                                   builder: (BuildContext context,
-                                      AsyncSnapshot snapshot) {
+                                      AsyncSnapshot<QuerySnapshot> snapshot) {
                                     if (snapshot.connectionState ==
-                                        ConnectionState.done) {
-                                      Map<String, dynamic> data =
-                                          snapshot.data.data();
-                                      return Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Stack(children: [
-                                            Text(
-                                              data['previusScore'],
-                                              style: TextStyle(
-                                                fontFamily: 'Pocket-monk',
-                                                fontSize: 40.0,
-                                                foreground: Paint()
-                                                  ..style = PaintingStyle.stroke
-                                                  ..strokeWidth = 6
-                                                  ..color = Colors.black,
-                                              ),
-                                            ),
-                                            Text(
-                                              data['previusScore'],
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontFamily: 'Pocket-monk',
-                                                  fontSize: 40.0),
-                                            ),
-                                          ]),
-                                        ],
-                                      );
+                                        ConnectionState.waiting) {
+                                      return Text("Loading");
                                     }
-
-                                    return Text("loading");
-                                  })
+                                    return ListView(
+                                      children: snapshot.data.docs.map(
+                                        (DocumentSnapshot document) {
+                                          return Stack(
+                                            children: [
+                                              Text(
+                                                document['previusScore'],
+                                                style: TextStyle(
+                                                  fontFamily: 'Pocket-monk',
+                                                  fontSize: 40.0,
+                                                  foreground: Paint()
+                                                    ..style =
+                                                        PaintingStyle.stroke
+                                                    ..strokeWidth = 6
+                                                    ..color = Colors.black,
+                                                ),
+                                              ),
+                                              Text(
+                                                document['previusScore'],
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontFamily: 'Pocket-monk',
+                                                    fontSize: 40.0),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ).toList(),
+                                    );
+                                  },
+                                )
                               : Container(
                                   decoration: BoxDecoration(
                                     borderRadius:

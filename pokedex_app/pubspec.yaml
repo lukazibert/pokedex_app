@@ -40,6 +40,7 @@ dependencies:
   cloud_firestore: ^2.1.0
   firebase_dynamic_links: ^0.5.1
   firebase_analytics: ^8.0.4
+  shared_preferences: ^2.0.5
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +71,7 @@ flutter:
     - assets/red.png
     - assets/pikatchu.png
     - assets/Untitled-1.png
+    - assets/pokeball.png
 
   
 

@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:pokedex_app/controllers/pokemon_controller.dart';
+import 'package:pokedex_app/views/game_start_view.dart';
+import 'package:pokedex_app/views/game_view.dart';
 
 enum Options { start, one, two, three }
 
@@ -51,6 +53,10 @@ class GameControlller extends GetxController {
   void exit() {
     Get.back();
   }
+  // void exit() {
+  //   Get.off(() => GameView());
+  //   Get.to(() => GameStart());
+  // }
 
   void start() async {
     await Future.delayed(Duration(milliseconds: 600));

@@ -82,13 +82,21 @@ class CustomEndDrawer2 extends StatelessWidget {
                           DrawerItem(
                             text: 'Pokemon details',
                             onPressed: () {
-                              if (homeController.homeController.hasClients)
-                                homeController.homeController.jumpToPage(1);
                               //homeController.homeController.jumpToPage(1);
-                              homeController.pokemonPageViewIndex.value = 0;
                               Navigator.pop(context);
                               navigationController.selectedWidget.value =
                                   WidgetMarker.info;
+                              //homeController.homeController.initialPage;
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+                                homeController.homeController.jumpToPage(0);
+                                homeController.homeController.jumpToPage(1);
+                                homeController.pokemonPageViewIndex.value = 0;
+                              });
+                              // if (homeController.homeController.hasClients) {
+
+                              //   homeController.homeController.jumpToPage(0);
+                              //   homeController.homeController.jumpToPage(1);
+                              // }
                             },
                             icon: Icons.info_outline,
                           ),

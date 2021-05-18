@@ -163,7 +163,8 @@ class AccountLoggedIn extends StatelessWidget {
                                   data['bestScore'],
                                   style: TextStyle(
                                     fontFamily: 'Pocket-monk',
-                                    fontSize: 80.0,
+                                    fontSize: 100.0,
+                                    letterSpacing: 3,
                                     foreground: Paint()
                                       ..style = PaintingStyle.stroke
                                       ..strokeWidth = 6
@@ -173,9 +174,10 @@ class AccountLoggedIn extends StatelessWidget {
                                 Text(
                                   data['bestScore'],
                                   style: TextStyle(
-                                      color: Colors.white,
+                                      letterSpacing: 3,
+                                      color: Colors.yellow,
                                       fontFamily: 'Pocket-monk',
-                                      fontSize: 80.0),
+                                      fontSize: 100.0),
                                 ),
                               ]),
                             ],
